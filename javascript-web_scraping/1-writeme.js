@@ -6,5 +6,4 @@ const ftext = process.argv[3];
 
 fs.writeFile(filePath,  ftext, 'utf-8', (err) => {
   if (err) {console.error(err);}
-  return;
 });
