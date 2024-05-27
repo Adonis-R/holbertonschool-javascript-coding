@@ -2,29 +2,40 @@ const fs = require('fs');
 
 function countStudents(path) {
   try {
-    const data = fs.readFileSync(path, 'utf8');
+    // Read the file synchronously.
+    const data = fs.readFileSync(path, 'utf8').trim();
+
+    // Split the data by lines.
     const lines = data.split('\n');
-    lines.shift();
-    const studentsByField = {};
 
+    // Initialize variables to count students in each field.
+    let csCount = 0;
+    const csList = [];
+    let sweCount = 0;
+    const sweList = [];
+
+    // Iterate through each line.
     for (const line of lines) {
-        const [firstname,,, field] = line.split(',');
+      const fields = line.split(',');
+      const [firstName, lastName, age, field] = fields;
 
-        if (!studentsByField[field]) {
-          studentsByField[field] = [];
+      // Check if the line is not empty
+      if (firstName && lastName && age && field) {
+        if (field === 'CS') {
+          csCount += 1;
+          csList.push(firstName);
+        } else if (field === 'SWE') {
+          sweCount += 1;
+          sweList.push(firstName);
         }
-        studentsByField[field].push(firstname);
       }
-    const totalStudents = lines.length;
+    }
 
-    console.log(`Number of students: ${totalStudents}`);
-
-    for (const field in studentsByField) {
-        const count = studentsByField[field].length;
-        const list = studentsByField[field].join(', ');
-        console.log(`Number of students in ${field}: ${count}. List: ${list}`);
-      }
-    } catch (error) {
+    // Log the number of students and their lists.
+    console.log(`Number of students: ${csCount + sweCount}`);
+    console.log(`Number of students in CS: ${csCount}. List: ${csList.join(', ')}`);
+    console.log(`Number of students in SWE: ${sweCount}. List: ${sweList.join(', ')}`);
+  } catch (error) {
     throw new Error('Cannot load the database');
   }
 }
