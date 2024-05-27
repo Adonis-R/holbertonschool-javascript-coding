@@ -6,7 +6,6 @@ function countStudents(path) {
       if (error) {
         reject(new Error('Cannot load the database'));
       } else {
-
         const lines = data.trim().split('\n');
 
         let csCount = 0;
