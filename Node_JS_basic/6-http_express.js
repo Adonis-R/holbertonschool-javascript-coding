@@ -11,3 +11,5 @@ app.get('/', (req, res) => {
 app.listen(PORT, HOST, () => {
   console.log(`Server listening at -> http://${HOST}:${PORT}`);
 });
+
+module.exports = app;
